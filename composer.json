@@ -23,7 +23,7 @@
         "symfony/validator": "^4.1",
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
-        "symfony/yaml": "^4.1"
+        "symfony/yaml": "^4.1",
         "debril/rss-atom-bundle": "^2.2",
         "friendsofsymfony/rest-bundle": "^1.1",
         "friendsofsymfony/user-bundle": "^1.3",
