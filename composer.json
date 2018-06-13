@@ -15,5 +15,6 @@
             "type": "vcs",
             "url": "https://github.com/os2display/media-bundle"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
