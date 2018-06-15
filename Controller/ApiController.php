@@ -38,7 +38,7 @@ class ApiController extends FOSRestController {
    * @param array $serializationGroups
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    */
-  protected function json($data, $status = 200, array $headers = [], array $serializationGroups = ['api']) {
+/*  protected function json($data, $status = 200, array $headers = [], array $serializationGroups = ['api']) {
     $response = new JsonResponse(NULL, $status, $headers);
 
     $serializer = $this->get('serializer');
@@ -50,9 +50,9 @@ class ApiController extends FOSRestController {
     $response->setContent($content);
 
     return $response;
-  }
+  }*/
 
-  /**
+   /**
    * @param $data
    * @param array $headers
    * @param array $serializationGroups

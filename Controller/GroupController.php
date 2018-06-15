@@ -13,7 +13,7 @@ use Os2Display\CoreBundle\Exception\DuplicateEntityException;
 use Os2Display\CoreBundle\Exception\HttpDataException;
 use Os2Display\CoreBundle\Exception\ValidationException;
 use Os2Display\CoreBundle\Security\GroupRoles;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+//use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ class GroupController extends ApiController
      * Lists all group entities.
      *
      * @Rest\Get("", name="api_group_index")
-     * @ApiDoc(
+     * @ ApiDoc(
      *   section="Groups",
      *   description="Get all groups",
      *   tags={"group"}
@@ -82,7 +82,7 @@ class GroupController extends ApiController
 
     /**
      * @Rest\Get("/roles")
-     * @ApiDoc(
+     * @ ApiDoc(
      *   section="Groups",
      *   description="Get all available group roles"
      * )
