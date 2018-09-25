@@ -81,8 +81,9 @@ services:
     public: true
 
   os2display.core.cleanup_service:
-    class: Os2Display\CoreBundle\Service\CleanupService
+    class: Os2Display\CoreBundle\Services\CleanupService
     arguments: ['@doctrine.orm.entity_manager']
+    public: true
 
   os2display.template_service:
     class: Os2Display\CoreBundle\Services\TemplateService
