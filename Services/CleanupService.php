@@ -26,22 +26,14 @@ class CleanupService {
 
   /**
    * Find unused media and media with updatedAt lower than threshold timestamp.
-   *
-   * @param int $threshold Optional threshold. If set all items with modification
-   *                       date before threshold will be included.
    * @return mixed Media.
    */
-  public function findMediaToDelete($threshold = null) {
+  public function findMediaToDelete() {
     $qb = $this->entityManager->createQueryBuilder();
 
     $query = $qb->select('m')
       ->from(Media::class, 'm')
       ->where('m.mediaOrders is empty');
-
-    if (!is_null($threshold)) {
-      $query->orWhere('m.updatedAt < :threshold')
-      ->setParameter('threshold', \DateTime::createFromFormat('U', $threshold));
-    }
 
     return $query->getQuery()->getResult();
   }
