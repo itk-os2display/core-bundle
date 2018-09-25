@@ -25,21 +25,29 @@ class CleanupService {
   }
 
   /**
-   * Find unused media and media with updatedAt lower than threshold timestamp.
+   * Find unused media with updatedAt lower than threshold timestamp, if set.
+   *
+   * @param int $threshold Optional threshold. If set all items with modification
+   *                       date before threshold will be included.
    * @return mixed Media.
    */
-  public function findMediaToDelete() {
+  public function findMediaToDelete($threshold = null) {
     $qb = $this->entityManager->createQueryBuilder();
 
-    $query = $qb->select('m')
-      ->from(Media::class, 'm')
-      ->where('m.mediaOrders is empty');
+    $query = $qb->select('entity')
+      ->from(Media::class, 'entity')
+      ->where('entity.mediaOrders is empty');
+
+    if (!is_null($threshold)) {
+      $query->andWhere('entity.updatedAt < :threshold')
+        ->setParameter('threshold', $threshold);
+    }
 
     return $query->getQuery()->getResult();
   }
 
   /**
-   * Find unused slides and slides with modifiedAt lower than threshold timestamp.
+   * Find unused slides and modifiedAt lower than threshold timestamp, if set.
    *
    * @param int $threshold Optional threshold. If set all items with modification
    *                       date before threshold will be included.
@@ -48,12 +56,12 @@ class CleanupService {
   public function findSlidesToDelete($threshold = null) {
     $qb = $this->entityManager->createQueryBuilder();
 
-    $query = $qb->select('s')
-      ->from(Slide::class, 's')
-      ->where('s.channelSlideOrders is empty');
+    $query = $qb->select('entity')
+      ->from(Slide::class, 'entity')
+      ->where('entity.channelSlideOrders is empty');
 
     if (!is_null($threshold)) {
-      $query->orWhere('s.modifiedAt < :threshold')
+      $query->andWhere('entity.modifiedAt < :threshold')
         ->setParameter('threshold', $threshold);
     }
 
@@ -61,7 +69,7 @@ class CleanupService {
   }
 
   /**
-   * Find unused channels and channels with modifiedAt lower than threshold timestamp.
+   * Find unused channels and modifiedAt lower than threshold timestamp, if set.
    *
    * @param int $threshold Optional threshold. If set all items with modification
    *                       date before threshold will be included.
@@ -70,12 +78,12 @@ class CleanupService {
   public function findChannelsToDelete($threshold = null) {
     $qb = $this->entityManager->createQueryBuilder();
 
-    $query = $qb->select('c')
-      ->from(Channel::class, 'c')
-      ->where('c.channelScreenRegions is empty');
+    $query = $qb->select('entity')
+      ->from(Channel::class, 'entity')
+      ->where('entity.channelScreenRegions is empty');
 
     if (!is_null($threshold)) {
-      $query->orWhere('c.modifiedAt < :threshold')
+      $query->andWhere('entity.modifiedAt < :threshold')
         ->setParameter('threshold', $threshold);
     }
 

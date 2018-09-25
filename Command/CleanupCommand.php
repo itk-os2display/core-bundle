@@ -56,6 +56,7 @@ class CleanupCommand extends ContainerAwareCommand {
       $deleteSuccess = true;
 
       $name = null;
+      $id = $entity->getId();
 
       if (get_class($entity) == Media::class) {
         $name = $entity->getName();
@@ -70,10 +71,10 @@ class CleanupCommand extends ContainerAwareCommand {
       }
 
       if ($deleteSuccess) {
-        $output->writeln('Deleted "' . $name .'" (id: ' . $entity->getId() . ')');
+        $output->writeln('Deleted "' . $name .'" (id: ' . $id . ')');
       }
       else {
-        $output->writeln('Error deleting "' . $name .'" (id: ' . $entity->getId() . ')');
+        $output->writeln('Error deleting "' . $name .'" (id: ' . $id . ')');
       }
     }
 
@@ -107,7 +108,7 @@ class CleanupCommand extends ContainerAwareCommand {
       $oneYearAgo = strtotime("-1 year", time());
       $date = date("Y-m-d", $oneYearAgo);
 
-      $selectedDate = $io->ask('Which date should be the threshold for deletion?', $date);
+      $selectedDate = $io->ask('Which date should be the threshold for deletion? Only items last modified before this date are removed.', $date);
 
       $timestampThreshold = date('U', strtotime($selectedDate));
 
