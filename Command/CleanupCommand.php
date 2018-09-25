@@ -117,20 +117,20 @@ class CleanupCommand extends ContainerAwareCommand {
 
     $cleanupService = $this->getContainer()->get('os2display.core.cleanup_service');
 
-    // Deleting Media
-    $mediaList = $cleanupService->findMediaToDelete($timestampThreshold);
-    if (count($mediaList) > 0) {
-      $confirm = $io->confirm('This will delete ' . count($mediaList) . ' media. Do you wish to continue?', FALSE);
+    // Deleting Channels
+    $channelList = $cleanupService->findChannelsToDelete($timestampThreshold);
+    if (count($channelList) > 0) {
+      $confirm = $io->confirm('This will delete ' . count($channelList) . ' channels. Do you wish to continue?', false);
       if (!$confirm) {
         $output->writeln('Cleanup cancelled!');
         return;
       }
-      $output->writeln('Deleting media...');
-      $numberOfDeletedMedia = $this->deleteEntities($mediaList, $cleanupService, $output, $dryRun);
+      $output->writeln('Deleting channels...');
+      $numberOfDeletedChannels = $this->deleteEntities($channelList, $cleanupService, $output, $dryRun);
       $output->writeln('');
     }
     else {
-      $output->writeln('No media found for deletion.');
+      $output->writeln('No channels found for deletion.');
     }
 
     // Deleting Slides
@@ -149,21 +149,20 @@ class CleanupCommand extends ContainerAwareCommand {
       $output->writeln('No slides found for deletion.');
     }
 
-
-    // Deleting Channels
-    $channelList = $cleanupService->findChannelsToDelete($timestampThreshold);
-    if (count($channelList) > 0) {
-      $confirm = $io->confirm('This will delete ' . count($channelList) . ' channels. Do you wish to continue?', false);
+    // Deleting Media
+    $mediaList = $cleanupService->findMediaToDelete($timestampThreshold);
+    if (count($mediaList) > 0) {
+      $confirm = $io->confirm('This will delete ' . count($mediaList) . ' media. Do you wish to continue?', false);
       if (!$confirm) {
         $output->writeln('Cleanup cancelled!');
         return;
       }
-      $output->writeln('Deleting channels...');
-      $numberOfDeletedChannels = $this->deleteEntities($channelList, $cleanupService, $output, $dryRun);
+      $output->writeln('Deleting media...');
+      $numberOfDeletedMedia = $this->deleteEntities($mediaList, $cleanupService, $output, $dryRun);
       $output->writeln('');
     }
     else {
-      $output->writeln('No channels found for deletion.');
+      $output->writeln('No media found for deletion.');
     }
 
     $output->writeln('');
@@ -171,9 +170,9 @@ class CleanupCommand extends ContainerAwareCommand {
     if ($dryRun) {
       $output->writeln('Dry-run enabled. No entities deleted.');
     }
-    $output->writeln('Media deleted: ' . $numberOfDeletedMedia);
-    $output->writeln('Slides deleted: ' . $numberOfDeletedSlides);
     $output->writeln('Channels deleted: ' . $numberOfDeletedChannels);
+    $output->writeln('Slides deleted: ' . $numberOfDeletedSlides);
+    $output->writeln('Media deleted: ' . $numberOfDeletedMedia);
     $output->writeln('### Summery ###');
     $output->writeln('');
     $output->writeln('Cleanup done.');
