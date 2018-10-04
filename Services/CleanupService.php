@@ -40,8 +40,8 @@ class CleanupService {
       ->andWhere('entity.logoSlides is empty');
 
     if (!is_null($threshold)) {
-      $query->andWhere('entity.updatedAt < :threshold')
-        ->setParameter('threshold', $threshold);
+      $query->orWhere('entity.updatedAt < :threshold')
+        ->setParameter('threshold', \DateTime::createFromFormat('U', $threshold));
     }
 
     return $query->getQuery()->getResult();
